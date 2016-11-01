@@ -1,0 +1,47 @@
+import re
+import sys
+
+ops = "(\+|\-|\*|\/)"
+nums = "(0|([1-9]0*\d*)*)(\.\d*){0,1}"
+opre = re.compile("^" + ops + "$")
+numre = re.compile("^" + nums + "$")
+
+def is_num(n):
+    return numre.match(n) != None
+
+def is_op(n):
+    return opre.match(n) != None
+
+def get_res(token, nums):
+    res = nums.pop()
+    if token == '+':
+        for n in nums:
+            res = res + n
+    elif token == '*':
+        for n in nums:
+            res = res * n
+    elif token == '-':
+        if len(nums) == 0:
+            res = -res
+        for n in nums:
+            res = res - n
+    elif token == '/':
+        for n in nums:
+            res = res / n
+    return res
+
+
+def calculate(argument):
+    stack = []
+    input = argument.split(" ")
+    for token in reversed(input):
+        if is_num(token):
+            stack.append(float(token))
+        elif is_op(token):
+            res = get_res(token, stack)
+            stack[:] = []
+            stack.append(res)
+        else:
+            print(str.format("An error occurred. Token \"{0}\" is neither an operator or number.", token))
+            sys.exit(0)
+    return stack[0]
