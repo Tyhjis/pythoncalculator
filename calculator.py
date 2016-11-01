@@ -1,7 +1,8 @@
 import re
 import sys
+from math import factorial
 
-ops = "(\+|\-|\*|\/)"
+ops = "(\+|\-|\*|\/|\!|\^)"
 nums = "(0|([1-9]0*\d*)*)(\.\d*){0,1}"
 opre = re.compile("^" + ops + "$")
 numre = re.compile("^" + nums + "$")
@@ -32,6 +33,11 @@ def get_res(token, nums):
     elif token == '/':
         for n in nums:
             res = res / n
+    elif token == '!':
+        res = factorial(res)
+    elif token == "^":
+        for n in nums:
+            res = res**n
     return res
 
 
