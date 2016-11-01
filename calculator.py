@@ -13,7 +13,11 @@ def is_op(n):
     return opre.match(n) != None
 
 def get_res(token, nums):
-    res = nums.pop()
+    try:
+        res = nums.pop()
+    except:
+        print(str.format('Error: Operator ”{0}" without operand(s) found.', token))
+        sys.exit(0)
     if token == '+':
         for n in nums:
             res = res + n
