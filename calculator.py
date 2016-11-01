@@ -33,7 +33,7 @@ def get_res(token, nums):
 
 def calculate(argument):
     stack = []
-    input = argument.split(" ")
+    input = argument.lstrip().rstrip().split(" ")
     for token in reversed(input):
         if is_num(token):
             stack.append(float(token))
